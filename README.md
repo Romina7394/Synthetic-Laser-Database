@@ -2,6 +2,14 @@
 
 A Streamlit application for searching, filtering, and visualizing synthetic laser experiment data.
 
+## Project Background
+
+This application was originally developed as part of my work as a student research assistant (HiWi) at a university.
+
+For this public GitHub repository, the original database connection, credentials, institutional resources, and real experimental data were removed and replaced with a fully synthetic dataset.
+
+No confidential university or laboratory data is included in this repository.
+
 ## About the Dataset
 
 The included dataset is completely synthetic and was created only for software development, database testing, filtering, and visualization.
