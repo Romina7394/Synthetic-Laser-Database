@@ -69,6 +69,7 @@ py -m streamlit run laser_database_app_github.py
 * Streamlit
 * Pandas
 * Matplotlib
+* MySQL
 
 ## Important Notice
 
