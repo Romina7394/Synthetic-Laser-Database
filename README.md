@@ -1,43 +1,43 @@
-# Synthetic Laser Database
+# Synthetische Laserdatenbank
 
-A Streamlit application for searching, filtering, and visualizing synthetic laser experiment data.
+Eine Streamlit-Anwendung zum Suchen, Filtern und Visualisieren synthetischer Daten aus Laserexperimenten.
 
-## Project Background
+## Projekthintergrund
 
-This application was originally developed as part of my work as a student research assistant (HiWi) at a university.
+Diese Anwendung wurde ursprünglich im Rahmen meiner Tätigkeit als studentische Hilfskraft (HiWi) an einer Hochschule entwickelt.
 
-For this public GitHub repository, the original database connection, credentials, institutional resources, and real experimental data were removed and replaced with a fully synthetic dataset.
+Für dieses öffentliche GitHub-Repository wurden die ursprüngliche Datenbankverbindung, Zugangsdaten, institutionellen Ressourcen und realen Versuchsdaten entfernt und durch einen vollständig synthetischen Datensatz ersetzt.
 
-No confidential university or laboratory data is included in this repository.
+Dieses Repository enthält keine vertraulichen Daten der Hochschule oder des Labors.
 
-## About the Dataset
+## Über den Datensatz
 
-The included dataset is completely synthetic and was created only for software development, database testing, filtering, and visualization.
+Der enthaltene Datensatz ist vollständig synthetisch und wurde ausschließlich für Softwareentwicklung, Datenbanktests, Filterfunktionen und Visualisierungen erstellt.
 
-It contains:
+Er enthält:
 
-* No real laboratory measurements
-* No personal information
-* No confidential university data
-* No proprietary research data
+* Keine realen Labormessungen
+* Keine personenbezogenen Daten
+* Keine vertraulichen Hochschuldaten
+* Keine geschützten Forschungsdaten
 
-Names beginning with `SYN-` indicate artificial experiment IDs, laser systems, scanners, and measurement devices.
+Bezeichnungen, die mit `SYN-` beginnen, kennzeichnen künstlich erzeugte Versuchs-IDs, Lasersysteme, Scanner und Messgeräte.
 
-The numerical values are generated for demonstration purposes and must not be interpreted as scientific results.
+Die numerischen Werte wurden zu Demonstrationszwecken generiert und dürfen nicht als wissenschaftliche Ergebnisse interpretiert werden.
 
-## Project Features
+## Projektfunktionen
 
-* Display laser experiment data
-* Detect numeric columns
-* Filter data using minimum and maximum values
-* Display descriptions of technical parameters
-* Visualize selected parameters using scatter plots
-* Prepare logical data groups for future database normalization
+* Anzeige von Daten aus Laserexperimenten
+* Erkennung numerischer Spalten
+* Filterung der Daten anhand von Minimal- und Maximalwerten
+* Anzeige von Beschreibungen technischer Parameter
+* Visualisierung ausgewählter Parameter mithilfe von Streudiagrammen
+* Vorbereitung logischer Datengruppen für eine zukünftige Normalisierung der Datenbank
 
-## Project Files
+## Projektdateien
 
 ```text
-laser_database_app_github.py
+laser_database.py
 synthetic_laser_databank.csv
 requirements.txt
 README.md
@@ -45,34 +45,33 @@ README.md
 
 ## Installation
 
-Install the required Python packages:
+Installation der benötigten Python-Bibliotheken:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run the Application
+## Anwendung starten
 
 ```bash
-streamlit run laser_database_app_github.py
+streamlit run laser_database.py
 ```
 
-Alternatively, on Windows:
+Alternativ unter Windows:
 
 ```powershell
-py -m streamlit run laser_database_app_github.py
+py -m streamlit run laser_database.py
 ```
 
-## Technologies
+## Verwendete Technologien
 
 * Python
 * Streamlit
 * Pandas
 * Matplotlib
-* MySQL
 
-## Important Notice
+## Wichtiger Hinweis
 
-This public version uses synthetic CSV data instead of the original university database.
+Diese öffentliche Version verwendet synthetische CSV-Daten anstelle der ursprünglichen Hochschuldatenbank.
 
-The original database credentials, server address, real experimental data, and Streamlit secrets are not included in this repository.
+Die ursprünglichen Datenbank-Zugangsdaten, die Serveradresse, reale Versuchsdaten und Streamlit-Secrets sind nicht in diesem Repository enthalten.
