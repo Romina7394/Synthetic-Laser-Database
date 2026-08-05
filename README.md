@@ -34,6 +34,36 @@ Die numerischen Werte wurden zu Demonstrationszwecken generiert und dürfen nich
 * Visualisierung ausgewählter Parameter mithilfe von Streudiagrammen
 * Vorbereitung logischer Datengruppen für eine zukünftige Normalisierung der Datenbank
 
+## 📈 Ergebnisse und Anwendungsbeispiel
+
+Die Anwendung lädt den synthetischen Datensatz und stellt die enthaltenen Laserexperiment-Daten in einer interaktiven Tabelle dar.
+
+Benutzer können:
+
+* eine logische Datengruppe auswählen,
+* technische Parameter und deren Beschreibungen anzeigen,
+* numerische Spalten anhand eines Minimal- und Maximalwertes filtern,
+* zwei numerische Parameter für die Visualisierung auswählen,
+* die gefilterten Ergebnisse in einem Streudiagramm darstellen.
+
+### 📈 Übersicht der Anwendung
+
+![Übersicht der Streamlit-Anwendung](images/app-overview.png)
+
+### 📈 Gefilterte Daten
+
+Das folgende Beispiel zeigt die Filterung eines numerischen Parameters innerhalb eines ausgewählten Wertebereichs.
+
+![Gefilterte Laserdaten](images/filtered-data.png)
+
+### 📈 Visualisierung
+
+Die gefilterten Werte können als Streudiagramm dargestellt werden, um mögliche Beziehungen zwischen zwei Parametern zu untersuchen.
+
+![Streudiagramm der synthetischen Daten](images/scatter-plot.png)
+
+Alle dargestellten Ergebnisse basieren ausschließlich auf dem synthetischen Datensatz und stellen keine realen wissenschaftlichen Messergebnisse dar.
+
 ## 📂 Projektdateien
 
 ```text
