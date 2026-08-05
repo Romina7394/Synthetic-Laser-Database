@@ -1,8 +1,8 @@
-# Synthetische Laserdatenbank
+# 📊 Synthetische Laserdatenbank
 
 Eine Streamlit-Anwendung zum Suchen, Filtern und Visualisieren synthetischer Daten aus Laserexperimenten.
 
-## Projekthintergrund
+## 📌 Projekthintergrund
 
 Diese Anwendung wurde ursprünglich im Rahmen meiner Tätigkeit als studentische Hilfskraft (HiWi) an einer Hochschule entwickelt.
 
@@ -10,7 +10,7 @@ Für dieses öffentliche GitHub-Repository wurden die ursprüngliche Datenbankve
 
 Dieses Repository enthält keine vertraulichen Daten der Hochschule oder des Labors.
 
-## Über den Datensatz
+## 📂 Über den Datensatz
 
 Der enthaltene Datensatz ist vollständig synthetisch und wurde ausschließlich für Softwareentwicklung, Datenbanktests, Filterfunktionen und Visualisierungen erstellt.
 
@@ -25,7 +25,7 @@ Bezeichnungen, die mit `SYN-` beginnen, kennzeichnen künstlich erzeugte Versuch
 
 Die numerischen Werte wurden zu Demonstrationszwecken generiert und dürfen nicht als wissenschaftliche Ergebnisse interpretiert werden.
 
-## Projektfunktionen
+## 🔍 Projektfunktionen
 
 * Anzeige von Daten aus Laserexperimenten
 * Erkennung numerischer Spalten
@@ -34,7 +34,7 @@ Die numerischen Werte wurden zu Demonstrationszwecken generiert und dürfen nich
 * Visualisierung ausgewählter Parameter mithilfe von Streudiagrammen
 * Vorbereitung logischer Datengruppen für eine zukünftige Normalisierung der Datenbank
 
-## Projektdateien
+## 📂 Projektdateien
 
 ```text
 laser_database.py
@@ -43,7 +43,7 @@ requirements.txt
 README.md
 ```
 
-## Installation
+## 🔍 Installation
 
 Installation der benötigten Python-Bibliotheken:
 
@@ -51,7 +51,7 @@ Installation der benötigten Python-Bibliotheken:
 pip install -r requirements.txt
 ```
 
-## Anwendung starten
+## 🔍 Anwendung starten
 
 ```bash
 streamlit run laser_database.py
@@ -63,7 +63,7 @@ Alternativ unter Windows:
 py -m streamlit run laser_database.py
 ```
 
-## Verwendete Technologien
+## 🛠️ Verwendete Technologien
 
 * Python
 * Streamlit
@@ -75,3 +75,14 @@ py -m streamlit run laser_database.py
 Diese öffentliche Version verwendet synthetische CSV-Daten anstelle der ursprünglichen Hochschuldatenbank.
 
 Die ursprünglichen Datenbank-Zugangsdaten, die Serveradresse, reale Versuchsdaten und Streamlit-Secrets sind nicht in diesem Repository enthalten.
+
+## 👩‍💻 Autorin
+
+**Romina Emadi**
+Data Science Studentin | Ziel: Data Analyst
+
+---
+
+## 📜 License
+
+MIT License
