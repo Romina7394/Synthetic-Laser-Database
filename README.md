@@ -280,6 +280,7 @@ institutionelle Konfigurationsdaten sind nicht Bestandteil dieses
 
 Für die lokale Einrichtung kann eine Beispielkonfiguration mit
 Platzhaltern verwendet werden.
+
 ---
 
 ## 🚀 Installation unter Windows
