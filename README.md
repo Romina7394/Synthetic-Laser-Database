@@ -267,20 +267,19 @@ database = "laser_database"
 
 Verwenden Sie hier ausschließlich Ihre eigenen lokalen MySQL-Zugangsdaten.
 
-### ⚠️ Wichtig
+### 🔐 Sicherheit und Konfiguration
 
-Die Datei mit echten Zugangsdaten sollte nicht in ein öffentliches GitHub-Repository hochgeladen werden.
+Datenbank-Zugangsdaten werden nicht im Quellcode gespeichert.
 
-Die ursprünglichen Zugangsdaten der Hochschule sowie interne Serverinformationen sind nicht Bestandteil dieser öffentlichen Version.
+Die lokale Datenbankkonfiguration erfolgt über
+`.streamlit/secrets.toml`.
 
-Für ein öffentliches Repository kann stattdessen beispielsweise eine Datei
+Diese Datei sowie reale Zugangsdaten, interne Serveradressen und
+institutionelle Konfigurationsdaten sind nicht Bestandteil dieses
+öffentlichen Repositorys.
 
-```text
-.streamlit/secrets.example.toml
-```
-
-mit Platzhaltern bereitgestellt werden.
-
+Für die lokale Einrichtung kann eine Beispielkonfiguration mit
+Platzhaltern verwendet werden.
 ---
 
 ## 🚀 Installation unter Windows
