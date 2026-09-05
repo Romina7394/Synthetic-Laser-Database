@@ -6,64 +6,85 @@ Eine modulare Streamlit-Anwendung zum Suchen, Filtern, Verarbeiten und Visualisi
 
 Diese Anwendung wurde ursprünglich im Rahmen meiner Tätigkeit als studentische Hilfskraft (HiWi) an einer Hochschule entwickelt.
 
-Die ursprüngliche Projektversion arbeitete mit einer internen MySQL-Datenbank und realen Laserexperiment-Daten.
+Die ursprüngliche interne Projektversion arbeitete mit einer MySQL-Datenbank und realen Daten aus Laserexperimenten.
 
-Für dieses öffentliche GitHub-Repository wurden jedoch alle realen Datenbankverbindungen, Zugangsdaten, institutionellen Ressourcen und Versuchsdaten entfernt.
+Für dieses öffentliche GitHub-Repository wurden alle realen Versuchsdaten, Datenbank-Zugangsdaten, internen Serverinformationen und institutionellen Ressourcen entfernt.
 
-Die öffentliche Version verwendet stattdessen einen vollständig synthetischen Datensatz, der ausschließlich zur Demonstration und zum Testen der Softwarefunktionen dient.
+Die öffentliche Version verwendet stattdessen einen vollständig synthetischen Datensatz. Dieser dient ausschließlich dazu, die Softwarearchitektur, Datenverarbeitung, Filterfunktionen und Visualisierung der Anwendung zu demonstrieren.
 
 Dieses Repository enthält keine vertraulichen Daten der Hochschule oder des Labors.
 
+---
+
 ## 📂 Über den Datensatz
 
-Der enthaltene Datensatz ist vollständig synthetisch und wurde ausschließlich für Softwareentwicklung, Datenverarbeitung, Filterfunktionen und Visualisierungen erstellt.
+Der bereitgestellte Datensatz ist vollständig synthetisch und wurde ausschließlich für Softwareentwicklung, Datenbanktests, Filterfunktionen und Visualisierungen erstellt.
 
 Er enthält:
 
-* Keine realen Labormessungen
-* Keine personenbezogenen Daten
-* Keine vertraulichen Hochschuldaten
-* Keine geschützten Forschungsdaten
-* Keine realen Datenbank-Zugangsdaten
+* keine realen Labormessungen,
+* keine personenbezogenen Daten,
+* keine vertraulichen Hochschuldaten,
+* keine geschützten Forschungsdaten,
+* keine realen Datenbank-Zugangsdaten.
 
 Bezeichnungen, die mit `SYN-` beginnen, kennzeichnen künstlich erzeugte Versuchs-IDs, Lasersysteme, Scanner und Messgeräte.
 
 Die numerischen Werte wurden zu Demonstrations- und Testzwecken generiert und dürfen nicht als wissenschaftliche Ergebnisse interpretiert werden.
 
+Die Anwendung liest den Datensatz nicht direkt aus der CSV-Datei.  
+Der synthetische Datensatz muss zunächst in eine lokale MySQL-Datenbank importiert werden.
+
+---
+
 ## 🔍 Projektfunktionen
 
 Die Anwendung unterstützt unter anderem:
 
-* Laden und Anzeigen synthetischer Laserexperiment-Daten
-* Vorbereitung und Bereinigung der Daten
-* Erkennung und Konvertierung numerischer Spalten
-* Anzeige technischer Parameter und ihrer Beschreibungen
-* Filterung numerischer Parameter anhand von Minimal- und Maximalwerten
+* Verbindung mit einer MySQL-Datenbank
+* Laden und Anzeigen von Datenbanktabellen
+* Vorbereitung und Bereinigung der geladenen Daten
+* Umbenennung ausgewählter Spalten
+* Zusammenführung von Prozess- und Messkommentaren
+* Erzeugung einer stabilen SHA-256-basierten ID für importierte Datensätze
+* Aufteilung der Daten in logische Parametergruppen
+* Anzeige technischer Parameterbeschreibungen
+* automatische Erkennung geeigneter numerischer Spalten
+* Konvertierung numerischer Werte, einschließlich Dezimalzahlen mit Komma
+* Filterung numerischer Parameter anhand eines Minimal- und Maximalwertes
 * Anzeige der gefilterten Ergebnisse
-* Auswahl zweier numerischer Parameter für Visualisierungen
-* Darstellung gefilterter Werte als Streudiagramm
-* Vorbereitung logischer Datengruppen
-* Modulare Trennung von Datenverarbeitung, Filterung, Visualisierung und Benutzeroberfläche
+* Auswahl zweier numerischer Parameter für die Visualisierung
+* Darstellung der gefilterten Daten als Streudiagramm
+* Auswahl weiterer Tabellen aus der verbundenen MySQL-Datenbank
 
-Die Parameter werden in logische Gruppen unterteilt, beispielsweise:
+---
 
-* Entry Information
-* Laser Parameters
-* Scanner Parameters
-* Scan Regime
-* Riblet Analysis
-* Calculated Parameters
+## 🧩 Logische Datengruppen
 
-## 🧩 Modulare Projektstruktur
+Die Daten der Haupttabelle werden in mehrere logische Gruppen unterteilt:
 
-Die Anwendung wurde im weiteren Verlauf des Projekts refaktoriert.
+* Entry information
+* Laser parameters
+* Scanner parameters
+* Scan regime
 
-Anstatt die gesamte Programmlogik in einer einzelnen Python-Datei zu speichern, wurden unterschiedliche Verantwortlichkeiten in separate Module aufgeteilt.
+Diese Gruppen werden innerhalb der Anwendung als separate DataFrames vorbereitet und können über die Streamlit-Oberfläche angezeigt werden.
 
-Dadurch ist der Code übersichtlicher, leichter wartbar und einfacher erweiterbar.
+Sie ersetzen dabei nicht die ursprünglichen Tabellen in MySQL.
+
+---
+
+## 🏗️ Projektarchitektur
+
+Die Anwendung wurde refaktoriert und in mehrere Module aufgeteilt.
+
+Dadurch sind Datenbankzugriff, Datenverarbeitung, Filterung, Visualisierung und Benutzeroberfläche voneinander getrennt.
 
 ```text
 laser-database/
+│
+├── .streamlit/
+│   └── secrets.toml
 │
 ├── assets/
 │   └── background.png
@@ -89,6 +110,7 @@ laser-database/
 │
 ├── app.py
 ├── run.py
+├── setup.bat
 ├── synthetic_laser_databank.csv
 ├── requirements.txt
 ├── pyproject.toml
@@ -99,28 +121,38 @@ laser-database/
 
 ### Aufgaben der wichtigsten Module
 
-* `data_processing.py` – Vorbereitung und Bereinigung der Daten
+* `database.py` – Aufbau der MySQL-Verbindung sowie Laden der Datenbanktabellen
+* `data_processing.py` – Vorbereitung und Bereinigung der geladenen Daten
 * `data_groups.py` – Aufteilung der Parameter in logische Datengruppen
 * `numeric_processing.py` – Erkennung und Konvertierung numerischer Spalten
 * `filtering.py` – Filterung der Daten und Vorbereitung der Plot-Daten
-* `visualization.py` – Erstellung der Visualisierungen
+* `visualization.py` – Erstellung der Streudiagramme
 * `descriptions.py` – Beschreibungen technischer Parameter
-* `background.py` – Verwaltung des Streamlit-Hintergrunds
-* `ui.py` – Aufbau der Streamlit-Benutzeroberfläche
-* `config.py` – Zentrale Projektkonfiguration
+* `background.py` – Einbindung des Hintergrundbildes in Streamlit
+* `ui.py` – Aufbau und Steuerung der Streamlit-Benutzeroberfläche
+* `config.py` – zentrale Projektkonfiguration
+
+Die Haupttabelle der Anwendung ist in `config.py` definiert als:
+
+```python
+MAIN_TABLE = "databank"
+```
+
+---
 
 ## 📈 Ergebnisse und Anwendungsbeispiel
 
-Die Anwendung lädt den synthetischen Datensatz und stellt die enthaltenen Laserexperiment-Daten in einer interaktiven Streamlit-Oberfläche dar.
+Nach erfolgreicher Verbindung mit der lokalen MySQL-Datenbank lädt die Anwendung die synthetischen Laserexperiment-Daten und stellt sie in einer interaktiven Streamlit-Oberfläche dar.
 
 Benutzer können:
 
-* eine logische Datengruppe auswählen,
-* technische Parameter und deren Beschreibungen anzeigen,
-* numerische Spalten anhand eines Minimal- und Maximalwertes filtern,
-* gefilterte Datensätze anzeigen,
-* zwei numerische Parameter für eine Visualisierung auswählen,
-* mögliche Beziehungen zwischen Parametern mithilfe eines Streudiagramms untersuchen.
+* vorbereitete logische Datengruppen anzeigen,
+* eine Datenbanktabelle auswählen,
+* die Anzahl der geladenen Datensätze sehen,
+* technische Parameter und ihre Beschreibungen anzeigen,
+* numerische Parameter anhand eines Wertebereichs filtern,
+* zwei numerische Parameter als X- und Y-Achse auswählen,
+* und die gefilterten Ergebnisse als Streudiagramm darstellen.
 
 ### 📈 Übersicht der Anwendung
 
@@ -140,14 +172,160 @@ Die gefilterten Werte können als Streudiagramm dargestellt werden, um mögliche
 
 Alle dargestellten Ergebnisse basieren ausschließlich auf dem synthetischen Datensatz und stellen keine realen wissenschaftlichen Messergebnisse dar.
 
+---
+
 ## ⚙️ Voraussetzungen
+
+Für die Ausführung des Projekts werden benötigt:
 
 * Python 3.10 oder neuer
 * pip
+* MySQL Server
+* eine lokale MySQL-Datenbank
+* der importierte synthetische Datensatz
 
-Für die öffentliche Version ist kein Zugang zur ursprünglichen Hochschul- oder Labordatenbank erforderlich.
+---
 
-## 🔧 Installation
+## 🗄️ MySQL-Datenbank vorbereiten
+
+Die Anwendung arbeitet mit einer MySQL-Datenbank.
+
+Für die öffentliche Version wird ausschließlich der bereitgestellte synthetische Datensatz verwendet.
+
+### 1. Lokale Datenbank erstellen
+
+Erstellen Sie zunächst eine neue lokale MySQL-Datenbank.
+
+Der Datenbankname kann frei gewählt werden.
+
+Beispiel:
+
+```sql
+CREATE DATABASE laser_database;
+```
+
+### 2. Synthetischen Datensatz importieren
+
+Importieren Sie anschließend:
+
+```text
+synthetic_laser_databank.csv
+```
+
+in die zuvor erstellte MySQL-Datenbank.
+
+Die importierte Haupttabelle muss den Namen
+
+```text
+databank
+```
+
+haben, da die Anwendung diese Tabelle beim Start automatisch lädt.
+
+Bei Verwendung von MySQL Workbench kann hierfür beispielsweise der **Table Data Import Wizard** verwendet werden.
+
+Nach dem Import sollte die Struktur ungefähr folgendermaßen aussehen:
+
+```text
+laser_database
+└── databank
+```
+
+Die Anwendung kann zusätzlich weitere Tabellen anzeigen, sofern diese in derselben Datenbank vorhanden sind.
+
+---
+
+## 🔐 Datenbank-Zugangsdaten konfigurieren
+
+Die Anwendung liest die MySQL-Verbindungsinformationen über Streamlit Secrets.
+
+Erstellen Sie lokal die Datei:
+
+```text
+.streamlit/secrets.toml
+```
+
+mit folgendem Aufbau:
+
+```toml
+[mysql]
+username = "YOUR_USERNAME"
+password = "YOUR_PASSWORD"
+host = "localhost"
+database = "YOUR_DATABASE"
+```
+
+Beispiel:
+
+```toml
+[mysql]
+username = "root"
+password = "YOUR_LOCAL_PASSWORD"
+host = "localhost"
+database = "laser_database"
+```
+
+Verwenden Sie hier ausschließlich Ihre eigenen lokalen MySQL-Zugangsdaten.
+
+### ⚠️ Wichtig
+
+Die Datei mit echten Zugangsdaten sollte nicht in ein öffentliches GitHub-Repository hochgeladen werden.
+
+Die ursprünglichen Zugangsdaten der Hochschule sowie interne Serverinformationen sind nicht Bestandteil dieser öffentlichen Version.
+
+Für ein öffentliches Repository kann stattdessen beispielsweise eine Datei
+
+```text
+.streamlit/secrets.example.toml
+```
+
+mit Platzhaltern bereitgestellt werden.
+
+---
+
+## 🚀 Installation unter Windows
+
+Für Windows steht die Datei
+
+```text
+setup.bat
+```
+
+zur Verfügung.
+
+Sie automatisiert die Einrichtung der Python-Umgebung.
+
+Nach dem Klonen oder Herunterladen des Repositorys kann `setup.bat` ausgeführt werden.
+
+Das Skript führt automatisch folgende Schritte aus:
+
+1. Erstellung einer virtuellen Umgebung `.venv`
+2. Aktivierung der virtuellen Umgebung
+3. Aktualisierung von `pip`
+4. Installation aller Pakete aus `requirements.txt`
+5. Installation des lokalen Packages im Editable Mode
+6. Installation von `spyder-kernels` für die Verwendung mit Spyder
+
+Der relevante Ablauf lautet:
+
+```bat
+python -m venv .venv
+call .venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -e .
+python -m pip install "spyder-kernels==3.1.*"
+```
+
+Die virtuelle Umgebung sollte nicht zwischen verschiedenen Computern kopiert werden.
+
+Jeder Benutzer kann mit `setup.bat` eine eigene lokale Umgebung erstellen.
+
+---
+
+## 🔧 Manuelle Installation
+
+Alternativ kann die Installation manuell durchgeführt werden.
 
 ### 1. Repository klonen
 
@@ -164,16 +342,16 @@ python -m venv .venv
 
 ### 3. Virtuelle Umgebung aktivieren
 
-Unter Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
 Unter Windows CMD:
 
 ```cmd
 .venv\Scripts\activate
+```
+
+Unter Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
 ```
 
 Unter Linux oder macOS:
@@ -182,89 +360,116 @@ Unter Linux oder macOS:
 source .venv/bin/activate
 ```
 
-### 4. Abhängigkeiten installieren
+### 4. pip aktualisieren
 
 ```bash
 python -m pip install --upgrade pip
+```
+
+### 5. Abhängigkeiten installieren
+
+```bash
 python -m pip install -r requirements.txt
 ```
 
-### 5. Lokales Package installieren
+### 6. Lokales Package installieren
 
 ```bash
 python -m pip install -e .
 ```
 
-Die Option `-e` installiert das Projekt im Editable Mode. Änderungen innerhalb von `src/laser_database` stehen dadurch direkt zur Verfügung, ohne dass das Package nach jeder Änderung erneut installiert werden muss.
+Die Option `-e` installiert das Package im Editable Mode.
 
-## 🪟 Automatische Installation unter Windows
+Dadurch sind Änderungen innerhalb von
 
-Unter Windows kann die Einrichtung alternativ über die bereitgestellte BAT-Datei durchgeführt werden.
+```text
+src/laser_database/
+```
 
-Das Setup:
+direkt verfügbar, ohne dass das Package nach jeder Änderung erneut installiert werden muss.
 
-1. erstellt automatisch eine virtuelle Umgebung `.venv`,
-2. aktiviert die virtuelle Umgebung,
-3. aktualisiert `pip`,
-4. installiert die Abhängigkeiten aus `requirements.txt`,
-5. installiert das lokale Projekt im Editable Mode.
-
-Dadurch muss die virtuelle Umgebung nicht zwischen verschiedenen Computern oder Benutzern kopiert werden.
-
-Jeder Benutzer erstellt seine eigene lokale Umgebung auf Basis der Projektdateien.
+---
 
 ## ▶️ Anwendung starten
 
-Nach der Installation kann die Anwendung mit folgendem Befehl gestartet werden:
+Nach der Installation, dem Import des synthetischen Datensatzes in MySQL und der Konfiguration von `secrets.toml` kann die Anwendung gestartet werden.
+
+Empfohlene Methode:
 
 ```bash
 python run.py
 ```
 
-Alternativ kann Streamlit direkt gestartet werden:
+`run.py` startet Streamlit automatisch mit dem aktuell verwendeten Python-Interpreter.
+
+Alternativ kann die Anwendung direkt über Streamlit gestartet werden:
 
 ```bash
 python -m streamlit run app.py
 ```
 
+Anschließend wird die Streamlit-Anwendung normalerweise automatisch im Browser geöffnet.
+
+---
+
 ## 🕷️ Verwendung mit Spyder
 
-Bei Verwendung von Spyder sollte der Python-Interpreter der projektspezifischen virtuellen Umgebung ausgewählt werden.
+Das Projekt kann auch mit Spyder verwendet werden.
 
-Unter Windows befindet sich dieser normalerweise unter:
-
-```text
-laser-database\.venv\Scripts\python.exe
-```
-
-Dadurch verwendet Spyder dieselben Python-Pakete und Abhängigkeiten wie das Projekt.
-
-Die virtuelle Umgebung `.venv` sollte nicht von einem anderen Computer kopiert werden. Stattdessen sollte sie für jeden Benutzer neu über `requirements.txt` beziehungsweise die bereitgestellte Setup-Datei erstellt werden.
-
-## 🔐 Zugangsdaten und Streamlit Secrets
-
-Die ursprüngliche interne Projektversion verwendete eine lokale Datei:
+Nach Ausführung von `setup.bat` befindet sich der Python-Interpreter der virtuellen Umgebung unter Windows normalerweise hier:
 
 ```text
-.streamlit/secrets.toml
+<project-folder>\.venv\Scripts\python.exe
 ```
 
-Darin wurden die für die interne Datenbankverbindung benötigten Informationen wie Benutzername, Passwort, Serveradresse und Datenbankname gespeichert.
+Dieser Interpreter sollte in Spyder für das Projekt ausgewählt werden.
 
-Diese Datei ist **nicht Bestandteil dieses öffentlichen Repositorys**.
+`setup.bat` installiert zusätzlich die benötigte Version von:
 
-Ebenso wurden keine realen:
+```text
+spyder-kernels==3.1.*
+```
 
-* Benutzernamen
-* Passwörter
-* Serveradressen
-* Datenbanknamen
-* Streamlit-Secrets
-* institutionellen Netzwerkpfade
+Dadurch kann Spyder eine Konsole mit der projektspezifischen virtuellen Umgebung starten.
 
-in das öffentliche Repository übernommen.
+---
 
-Die öffentliche Version benötigt keine Zugangsdaten zur ursprünglichen Hochschul- oder Labordatenbank.
+## 🔄 Datenverarbeitung
+
+Nach dem Laden der Haupttabelle führt die Anwendung mehrere Vorbereitungsschritte durch.
+
+Unter anderem werden:
+
+* `Area-ID` in `experiment_name` umbenannt,
+* `Laser` in `laserunite` umbenannt,
+* die Spalte `No` entfernt,
+* `commproc` und `commmeas` zu `UserComment` zusammengeführt,
+* und für jede importierte Zeile eine SHA-256-basierte `unique ID` erzeugt.
+
+Diese ID dient dazu, die vorbereiteten Datensätze innerhalb der Anwendung eindeutig zu referenzieren.
+
+Die ursprünglichen MySQL-Daten werden dadurch nicht überschrieben.
+
+---
+
+## 🔢 Erkennung numerischer Daten
+
+Die Anwendung prüft automatisch, welche Spalten als numerische Werte verwendet werden können.
+
+Dabei werden unter anderem Dezimalwerte mit Komma verarbeitet.
+
+Eine Spalte wird als numerisch behandelt, wenn ein ausreichender Anteil ihrer vorhandenen Werte erfolgreich in Zahlen konvertiert werden kann.
+
+Diese numerischen Spalten stehen anschließend für:
+
+* Wertebereichsfilter,
+* X-Achse,
+* Y-Achse,
+* und Visualisierung
+
+zur Verfügung.
+
+---
 
 ## 🛠️ Verwendete Technologien
 
@@ -272,30 +477,44 @@ Die öffentliche Version benötigt keine Zugangsdaten zur ursprünglichen Hochsc
 * Streamlit
 * Pandas
 * Matplotlib
+* MySQL
+* SQLAlchemy
+* PyMySQL
 * Python Virtual Environments
 * Python Packaging (`pyproject.toml`)
+* Spyder
+
+---
 
 ## 🔒 Datenschutz und öffentliche Version
 
 Dieses Repository stellt ausschließlich eine öffentliche Demonstrationsversion des Projekts dar.
 
-Die Software basiert auf der während des ursprünglichen Projekts entwickelten Anwendung. Für die Veröffentlichung wurden jedoch alle institutionellen und vertraulichen Bestandteile entfernt oder durch synthetische Alternativen ersetzt.
+Die Softwarearchitektur basiert auf der im Rahmen der ursprünglichen Tätigkeit entwickelten Anwendung.
 
-Insbesondere enthält dieses Repository keine:
+Vor der Veröffentlichung wurden jedoch sämtliche vertraulichen oder institutionellen Bestandteile entfernt.
 
-* realen Versuchsdaten,
+Das öffentliche Repository enthält insbesondere keine:
+
+* realen Laserexperiment-Daten,
 * vertraulichen Forschungsdaten,
-* Datenbank-Zugangsdaten,
-* internen Serverinformationen,
-* Streamlit-Secrets,
 * personenbezogenen Daten,
-* internen Hochschulressourcen.
+* realen Datenbank-Benutzernamen,
+* realen Datenbank-Passwörter,
+* internen Serveradressen,
+* institutionellen Netzwerkpfade,
+* produktiven Streamlit-Secrets.
 
-Der synthetische Datensatz dient ausschließlich dazu, die Softwarearchitektur, Datenverarbeitung, Filterfunktionen und Visualisierung der Anwendung zu demonstrieren.
+Die öffentlich bereitgestellten Daten sind vollständig synthetisch.
+
+Benutzer der öffentlichen Version richten eine eigene lokale MySQL-Datenbank ein und verwenden ausschließlich ihre eigenen lokalen Zugangsdaten.
+
+---
 
 ## 👩‍💻 Autorin
 
 **Romina Emadi**
+
 Data Science Studentin | Ziel: Data Analyst
 
 ---
